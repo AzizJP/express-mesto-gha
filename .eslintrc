@@ -13,12 +13,13 @@
       "error",
       {
         "allow": [
-          "_id",
-          "__filename",
-          "__dirname",
-          "__v"
+          "_id"
         ]
       }
-    ]
+    ],
+    "linebreak-style": ["off"],
+    "implicit-arrow-linebreak": ["off"],
+    "arrow-body-style": ["off"],
+    "no-console":"off"
   }
 }

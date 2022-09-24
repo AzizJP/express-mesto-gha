@@ -14,8 +14,7 @@ const getUsers = (req, res) => {
   return User.find({})
     .then((users) => res.status(200).send(users))
     .catch(() =>
-      res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE })
-    );
+      res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE }));
 };
 
 const getUserById = (req, res) => {
@@ -47,8 +46,7 @@ const createUser = (req, res) => {
         about: user.about,
         avatar: user.avatar,
         _id: user._id,
-      })
-    )
+      }))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res
@@ -68,7 +66,7 @@ const updateUser = (req, res) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   )
     .orFail(new Error(NOT_FOUND_MESSAGE_USER))
     .then((user) =>
@@ -77,8 +75,7 @@ const updateUser = (req, res) => {
         about: user.about,
         avatar: user.avatar,
         _id: user._id,
-      })
-    )
+      }))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res
@@ -100,7 +97,7 @@ const updateAvatarById = (req, res) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   )
     .orFail(new Error(NOT_FOUND_MESSAGE_USER))
     .then((user) =>
@@ -111,8 +108,7 @@ const updateAvatarById = (req, res) => {
           about: user.about,
           avatar: user.avatar,
           _id: user._id,
-        })
-    )
+        }))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res

@@ -33,10 +33,9 @@ const createCard = (req, res) => {
         likes: card.likes,
         link: card.link,
         name: card.name,
-        owner: owner,
+        owner,
         _id: card._id,
-      })
-    )
+      }))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res
@@ -67,7 +66,7 @@ const likeCard = (req, res) => {
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true }
+    { new: true },
   )
     .then((card) =>
       res.send({
@@ -75,10 +74,9 @@ const likeCard = (req, res) => {
         likes: card.likes,
         link: card.link,
         name: card.name,
-        owner: owner,
+        owner,
         _id: card._id,
-      })
-    )
+      }))
     .catch((err) => {
       if (err.name === "CastError") {
         res.status(NOT_FOUND).send({ message: NOT_FOUND_MESSAGE_CARD });
@@ -95,7 +93,7 @@ const deleteLikeCard = (req, res) => {
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    { new: true }
+    { new: true },
   )
     .then((card) =>
       res.send({
@@ -103,10 +101,9 @@ const deleteLikeCard = (req, res) => {
         likes: card.likes,
         link: card.link,
         name: card.name,
-        owner: owner,
+        owner,
         _id: card._id,
-      })
-    )
+      }))
     .catch((err) => {
       if (err.name === "CastError") {
         res.status(NOT_FOUND).send({ message: NOT_FOUND_MESSAGE_CARD });
@@ -116,4 +113,6 @@ const deleteLikeCard = (req, res) => {
     });
 };
 
-module.exports = { getCards, createCard, deleteCard, likeCard, deleteLikeCard };
+module.exports = {
+  getCards, createCard, deleteCard, likeCard, deleteLikeCard,
+};
