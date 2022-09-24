@@ -53,7 +53,7 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const { name, about } = req.body;
   return User.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     { name, about },
     {
       new: true,
@@ -80,7 +80,7 @@ const updateUser = (req, res) => {
 const updateAvatarById = (req, res) => {
   const { avatar } = req.body;
   return User.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     { avatar },
     {
       new: true,
