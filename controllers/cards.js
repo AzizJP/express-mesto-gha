@@ -5,13 +5,13 @@ const {
   BAD_REQUEST_MESSAGE_POST_CARDS,
   BAD_REQUEST,
   NOT_FOUND,
+  BAD_REQUEST_MESSAGE_ID,
 } = require("../errors/errorMessages");
 const Card = require("../models/card");
 
 const getCards = (req, res) => {
   return Card.find({})
-    .orFail(new Error("К сожалению, еще не одной карточки не добавлено"))
-    .then((cards) => res.status(200).send(cards))
+    .then((cards) => res.send(cards))
     .catch((err) => {
       if (Error) {
         res.status(NOT_FOUND).send({ message: err.message });
@@ -27,15 +27,7 @@ const createCard = (req, res) => {
     _id: req.user._id,
   };
   return Card.create({ name, link, owner })
-    .then((card) =>
-      res.send({
-        createdAt: card.createdAt,
-        likes: card.likes,
-        link: card.link,
-        name: card.name,
-        owner,
-        _id: card._id,
-      }))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res
@@ -49,10 +41,15 @@ const createCard = (req, res) => {
 
 const deleteCard = (req, res) => {
   return Card.findByIdAndRemove(req.params.cardId)
-    .then(() => res.status(200).send({ message: "Пост удалён" }))
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_CARD);
+    })
+    .then(() => res.send({ message: "Пост удалён" }))
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(NOT_FOUND).send({ message: NOT_FOUND_MESSAGE_CARD });
+      if (err.message === NOT_FOUND_MESSAGE_CARD) {
+        res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "CastError") {
+        res.status(BAD_REQUEST).send({ message: BAD_REQUEST_MESSAGE_ID });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
@@ -60,26 +57,20 @@ const deleteCard = (req, res) => {
 };
 
 const likeCard = (req, res) => {
-  const owner = {
-    _id: req.user._id,
-  };
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) =>
-      res.send({
-        createdAt: card.createdAt,
-        likes: card.likes,
-        link: card.link,
-        name: card.name,
-        owner,
-        _id: card._id,
-      }))
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_CARD);
+    })
+    .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(NOT_FOUND).send({ message: NOT_FOUND_MESSAGE_CARD });
+      if (err.message === NOT_FOUND_MESSAGE_CARD) {
+        res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "CastError") {
+        res.status(BAD_REQUEST).send({ message: BAD_REQUEST_MESSAGE_ID });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
@@ -87,26 +78,20 @@ const likeCard = (req, res) => {
 };
 
 const deleteLikeCard = (req, res) => {
-  const owner = {
-    _id: req.user._id,
-  };
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) =>
-      res.send({
-        createdAt: card.createdAt,
-        likes: card.likes,
-        link: card.link,
-        name: card.name,
-        owner,
-        _id: card._id,
-      }))
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_CARD);
+    })
+    .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(NOT_FOUND).send({ message: NOT_FOUND_MESSAGE_CARD });
+      if (err.message === NOT_FOUND_MESSAGE_CARD) {
+        res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "CastError") {
+        res.status(BAD_REQUEST).send({ message: BAD_REQUEST_MESSAGE_ID });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
@@ -114,5 +99,9 @@ const deleteLikeCard = (req, res) => {
 };
 
 module.exports = {
-  getCards, createCard, deleteCard, likeCard, deleteLikeCard,
+  getCards,
+  createCard,
+  deleteCard,
+  likeCard,
+  deleteLikeCard,
 };

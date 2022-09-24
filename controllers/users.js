@@ -7,30 +7,28 @@ const {
   BAD_REQUEST_MESSAGE_POST_USER,
   BAD_REQUEST_MESSAGE_UPDATE_USER,
   BAD_REQUEST_MESSAGE_UPDATE_AVATAR,
+  BAD_REQUEST_MESSAGE_ID,
 } = require("../errors/errorMessages");
 const User = require("../models/user");
 
 const getUsers = (req, res) => {
   return User.find({})
-    .then((users) => res.status(200).send(users))
+    .then((users) => res.send(users))
     .catch(() =>
       res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE }));
 };
 
 const getUserById = (req, res) => {
-  return User.findById(req.user._id)
-    .orFail(new Error(NOT_FOUND_MESSAGE_USER))
-    .then((user) => {
-      res.status(200).send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        _id: user._id,
-      });
+  return User.findById(req.params.userId)
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_USER);
     })
+    .then((user) => res.send(user))
     .catch((err) => {
-      if (Error) {
+      if (err.message === NOT_FOUND_MESSAGE_USER) {
         res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "CastError") {
+        res.status(BAD_REQUEST).send({ message: BAD_REQUEST_MESSAGE_ID });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
@@ -40,13 +38,7 @@ const getUserById = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   return User.create({ name, about, avatar })
-    .then((user) =>
-      res.send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        _id: user._id,
-      }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === "ValidationError") {
         res
@@ -61,28 +53,24 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const { name, about } = req.body;
   return User.findByIdAndUpdate(
-    req.user._id,
+    req.params.userId,
     { name, about },
     {
       new: true,
       runValidators: true,
     },
   )
-    .orFail(new Error(NOT_FOUND_MESSAGE_USER))
-    .then((user) =>
-      res.send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        _id: user._id,
-      }))
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_USER);
+    })
+    .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.message === NOT_FOUND_MESSAGE_USER) {
+        res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "ValidationError") {
         res
           .status(BAD_REQUEST)
           .send({ message: BAD_REQUEST_MESSAGE_UPDATE_USER });
-      } else if (Error) {
-        res.status(NOT_FOUND).send({ message: err.message });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
@@ -92,30 +80,24 @@ const updateUser = (req, res) => {
 const updateAvatarById = (req, res) => {
   const { avatar } = req.body;
   return User.findByIdAndUpdate(
-    req.user._id,
+    req.params.userId,
     { avatar },
     {
       new: true,
       runValidators: true,
     },
   )
-    .orFail(new Error(NOT_FOUND_MESSAGE_USER))
-    .then((user) =>
-      res
-        .status(200)
-        .send({
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          _id: user._id,
-        }))
+    .orFail(() => {
+      throw new Error(NOT_FOUND_MESSAGE_USER);
+    })
+    .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.message === NOT_FOUND_MESSAGE_USER) {
+        res.status(NOT_FOUND).send({ message: err.message });
+      } else if (err.name === "ValidationError") {
         res
           .status(BAD_REQUEST)
           .send({ message: BAD_REQUEST_MESSAGE_UPDATE_AVATAR });
-      } else if (Error) {
-        res.status(NOT_FOUND).send({ message: err.message });
       } else {
         res.status(SERVER_ERROR).send({ message: SERVER_ERROR_MESSAGE });
       }
