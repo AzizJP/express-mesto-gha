@@ -1,29 +1,11 @@
-[![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-
 [![Tests](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-13-sprint.yml)
 [![Tests](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+# Проект Mesto бэкенд
 
-
-
-## Настройка бейджей статуса тестов
-Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
-Для этого замените разметку бейджей на следующий фрагмент, подставив вместо `${имя_пользователя}` и `${имя_репозитория}` соответствующие значения.
-
-```
-[![Tests for sprint 13](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-13-sprint.yml) 
-
-[![Tests for sprint 14](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/AzizJP/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-```
-
-
-## Директории
-
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+## Стек
+![Node.js](https://img.shields.io/badge/-Node.js-4A4A4A?style=for-the-badge&logo=Node.js&logoColor=2D8822)
+![Express.js](https://img.shields.io/badge/-Express.js-4A4A4A?style=for-the-badge&logo=Express&logoColor=F7FF7A)
+![MongoDB](https://img.shields.io/badge/-MongoDB-4A4A4A?style=for-the-badge&logo=MongoDB&logoColor=2ED919)
 
 ## Запуск проекта
 
