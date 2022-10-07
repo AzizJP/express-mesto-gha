@@ -5,10 +5,6 @@
       "error",
       "always"
     ],
-    "quotes": [
-      "error",
-      "double"
-    ],
     "no-underscore-dangle": [
       "error",
       {
@@ -17,9 +13,6 @@
         ]
       }
     ],
-    "linebreak-style": ["off"],
-    "implicit-arrow-linebreak": ["off"],
-    "arrow-body-style": ["off"],
-    "no-console":"off"
+    "no-console": "off"
   }
 }
