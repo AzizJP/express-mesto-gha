@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
-const { NotFoundController } = require('./errors/NotFoundController');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const validateSignUp = require('./middlewares/validateSignUp');
 const validateSignIn = require('./middlewares/validateSignIn');
+const { NotFoundController } = require('./errors/NotFoundController');
 
 const { PORT = 3000 } = process.env;
 const app = express();
