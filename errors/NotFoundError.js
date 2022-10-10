@@ -1,4 +1,4 @@
-const { NOT_FOUND } = require('./errorMessages');
+const { NOT_FOUND } = require('./ErrorMessages');
 
 class NotFoundError extends Error {
   constructor(message) {
