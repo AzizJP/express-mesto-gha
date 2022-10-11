@@ -2,14 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
-const { login, createUser } = require('./controllers/users');
-const auth = require('./middlewares/auth');
+const routes = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
-const validateSignUp = require('./middlewares/validateSignUp');
-const validateSignIn = require('./middlewares/validateSignIn');
-const { NotFoundController } = require('./errors/notFoundController');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -17,14 +11,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/signin', validateSignIn, login);
-app.post('/signup', validateSignUp, createUser);
+app.use('/', routes);
 
-app.use(auth);
-
-app.use('/', usersRouter);
-app.use('/', cardsRouter);
-app.use('*', NotFoundController);
 app.use(errors());
 app.use(errorHandler);
 
