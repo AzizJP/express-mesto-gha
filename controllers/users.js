@@ -7,12 +7,10 @@ const {
   BAD_REQUEST_MESSAGE_UPDATE_AVATAR,
   BAD_REQUEST_MESSAGE_ID,
   CONFLICT_MESSAGE_USER,
-  UNAUTHORIZED_MESSAGE,
 } = require('../errors/errorMessages');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequest');
 const ConflictError = require('../errors/ConflictError');
-const UnauthorizedError = require('../errors/UnauthorizedError');
 const User = require('../models/user');
 
 const getUsers = (req, res, next) => User.find({})
@@ -119,13 +117,7 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch((err) => {
-      if (err.message === UNAUTHORIZED_MESSAGE) {
-        next(new UnauthorizedError(err.message));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports = {
