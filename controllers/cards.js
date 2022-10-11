@@ -31,21 +31,17 @@ const createCard = (req, res, next) => {
     });
 };
 
-const deleteCard = (req, res, next) => Card.findByIdAndRemove(req.params.cardId)
-  .orFail(() => {
-    throw new Error(NOT_FOUND_MESSAGE_CARD);
-  })
+const deleteCard = (req, res, next) => Card.findById(req.params.cardId)
+  .orFail(() => next(new NotFoundError(NOT_FOUND_MESSAGE_CARD)))
   .then((card) => {
-    if (String(card.owner === req.user._id)) {
-      res.send({ message: 'Пост удалён' });
-    } else {
-      throw new ForbiddenError(FORBIDDEN_MESSAGE_CARD);
+    if (String(card.owner) !== req.user._id) {
+      return next(new ForbiddenError(FORBIDDEN_MESSAGE_CARD));
     }
+    return card.remove()
+      .then(() => res.send({ message: 'Карточка удалена' }));
   })
   .catch((err) => {
-    if (err.message === NOT_FOUND_MESSAGE_CARD) {
-      next(new NotFoundError(err.message));
-    } else if (err.name === 'CastError') {
+    if (err.name === 'CastError') {
       next(new BadRequestError(BAD_REQUEST_MESSAGE_ID));
     } else {
       next(err);
@@ -57,14 +53,10 @@ const likeCard = (req, res, next) => Card.findByIdAndUpdate(
   { $addToSet: { likes: req.user._id } },
   { new: true },
 )
-  .orFail(() => {
-    throw new Error(NOT_FOUND_MESSAGE_CARD);
-  })
+  .orFail(() => next(new NotFoundError(NOT_FOUND_MESSAGE_CARD)))
   .then((card) => res.send(card))
   .catch((err) => {
-    if (err.message === NOT_FOUND_MESSAGE_CARD) {
-      next(new NotFoundError(err.message));
-    } else if (err.name === 'CastError') {
+    if (err.name === 'CastError') {
       next(new BadRequestError(BAD_REQUEST_MESSAGE_ID));
     } else {
       next(err);
@@ -76,14 +68,10 @@ const deleteLikeCard = (req, res, next) => Card.findByIdAndUpdate(
   { $pull: { likes: req.user._id } },
   { new: true },
 )
-  .orFail(() => {
-    throw new Error(NOT_FOUND_MESSAGE_CARD);
-  })
+  .orFail(() => next(new NotFoundError(NOT_FOUND_MESSAGE_CARD)))
   .then((card) => res.send(card))
   .catch((err) => {
-    if (err.message === NOT_FOUND_MESSAGE_CARD) {
-      next(new NotFoundError(err.message));
-    } else if (err.name === 'CastError') {
+    if (err.name === 'CastError') {
       next(new BadRequestError(BAD_REQUEST_MESSAGE_ID));
     } else {
       next(err);
