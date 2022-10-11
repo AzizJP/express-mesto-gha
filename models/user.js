@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { default: isEmail } = require('validator/lib/isEmail');
 const { UNAUTHORIZED_MESSAGE } = require('../errors/ErrorMessages');
 
 const userSchema = new mongoose.Schema({
@@ -29,12 +30,19 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     minlength: 2,
+    validate: {
+      validator(value) {
+        if (!isEmail(value)) {
+          return false;
+        }
+        return value;
+      },
+    },
   },
   password: {
     type: String,
     required: true,
     select: false,
-    minlength: 6,
   },
 });
 
