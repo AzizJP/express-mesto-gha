@@ -1,10 +1,10 @@
 const { Joi } = require('celebrate');
-const { regex } = require('../utils/constants');
+const { regexForUrl } = require('../utils/constants');
 
 const avatarUpdateJoiSchema = Joi.object().keys({
   avatar: Joi.string()
     .required()
-    .pattern(regex),
+    .pattern(regexForUrl),
 });
 
 module.exports = avatarUpdateJoiSchema;

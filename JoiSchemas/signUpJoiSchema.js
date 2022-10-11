@@ -1,5 +1,5 @@
 const { Joi } = require('celebrate');
-const { regex } = require('../utils/constants');
+const { regexForUrl } = require('../utils/constants');
 
 const signUpJoiSchema = Joi.object().keys({
   name: Joi.string()
@@ -9,7 +9,7 @@ const signUpJoiSchema = Joi.object().keys({
     .max(30)
     .min(2),
   avatar: Joi.string()
-    .pattern(regex),
+    .pattern(regexForUrl),
   email: Joi.string()
     .required()
     .email(),

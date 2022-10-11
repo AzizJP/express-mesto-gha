@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { regexGm } = require('../utils/constants');
+const { regexForUrlGlobal } = require('../utils/constants');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -13,7 +13,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(value) {
-        return regexGm.test(value);
+        return regexForUrlGlobal.test(value);
       },
     },
   },
