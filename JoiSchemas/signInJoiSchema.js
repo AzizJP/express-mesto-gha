@@ -1,6 +1,6 @@
 const { Joi } = require('celebrate');
 
-const signUpJoiSchema = Joi.object().keys({
+const signInJoiSchema = Joi.object().keys({
   email: Joi.string()
     .required()
     .email(),
@@ -8,4 +8,4 @@ const signUpJoiSchema = Joi.object().keys({
     .required(),
 });
 
-module.exports = signUpJoiSchema;
+module.exports = signInJoiSchema;

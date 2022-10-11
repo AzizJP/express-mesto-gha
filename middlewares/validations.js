@@ -2,10 +2,10 @@ const { celebrate } = require('celebrate');
 const avatarUpdateJoiSchema = require('../JoiSchemas/avatarUpdateJoiSchema');
 const cardIdJoiSchema = require('../JoiSchemas/cardIdJoiSchema');
 const createCardJoiSchema = require('../JoiSchemas/createCardJoiSchema');
-const signUpJoiSchema = require('../JoiSchemas/signInJoiSchema');
+const signInJoiSchema = require('../JoiSchemas/signInJoiSchema');
+const signUpJoiSchema = require('../JoiSchemas/signUpJoiSchema');
 const userIdJoiSchema = require('../JoiSchemas/userIdJoiSchema');
 const userUpdateJoiSchema = require('../JoiSchemas/userUpdateJoiSchema');
-const signInJoiSchema = require('../JoiSchemas/signInJoiSchema');
 
 const validateSignUp = celebrate({
   body: signUpJoiSchema,
