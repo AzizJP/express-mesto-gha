@@ -7,6 +7,7 @@ const BAD_REQUEST_MESSAGE_UPDATE_AVATAR = 'Переданы некорректн
 const BAD_REQUEST_MESSAGE_ID = 'Передан некорректный _id';
 const UNAUTHORIZED = 401;
 const UNAUTHORIZED_MESSAGE = 'Неправильные почта или пароль';
+const UNAUTHORIZED_MESSAGE_AUTH = 'Необходима авторизация';
 const NOT_FOUND = 404;
 const NOT_FOUND_MESSAGE_ROUTE = 'Запрашиваемый ресурс не найден';
 const NOT_FOUND_MESSAGE_USER = 'Пользователь по указанному _id не найден';
@@ -29,6 +30,7 @@ module.exports = {
   BAD_REQUEST_MESSAGE_ID,
   UNAUTHORIZED,
   UNAUTHORIZED_MESSAGE,
+  UNAUTHORIZED_MESSAGE_AUTH,
   NOT_FOUND,
   NOT_FOUND_MESSAGE_ROUTE,
   NOT_FOUND_MESSAGE_USER,
