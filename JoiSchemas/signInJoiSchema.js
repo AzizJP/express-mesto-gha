@@ -5,8 +5,7 @@ const signUpJoiSchema = Joi.object().keys({
     .required()
     .email(),
   password: Joi.string()
-    .required()
-    .min(8),
-}).unknown(true);
+    .required(),
+});
 
 module.exports = signUpJoiSchema;

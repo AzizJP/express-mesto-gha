@@ -9,6 +9,6 @@ const userUpdateJoiSchema = Joi.object().keys({
     .required()
     .max(30)
     .min(2),
-}).unknown(true);
+});
 
 module.exports = userUpdateJoiSchema;
