@@ -3,7 +3,7 @@ const {
   BAD_REQUEST_MESSAGE_POST_CARDS,
   BAD_REQUEST_MESSAGE_ID,
   FORBIDDEN_MESSAGE_CARD,
-} = require('../errors/ErrorMessages');
+} = require('../errors/errorMessages');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequest');

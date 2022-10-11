@@ -8,7 +8,7 @@ const {
   BAD_REQUEST_MESSAGE_ID,
   CONFLICT_MESSAGE_USER,
   UNAUTHORIZED_MESSAGE,
-} = require('../errors/ErrorMessages');
+} = require('../errors/errorMessages');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequest');
 const ConflictError = require('../errors/ConflictError');

@@ -9,7 +9,7 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const validateSignUp = require('./middlewares/validateSignUp');
 const validateSignIn = require('./middlewares/validateSignIn');
-const { NotFoundController } = require('./errors/NotFoundController');
+const { NotFoundController } = require('./errors/notFoundController');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -19,7 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/signin', validateSignIn, login);
 app.post('/signup', validateSignUp, createUser);
+
 app.use(auth);
+
 app.use('/', usersRouter);
 app.use('/', cardsRouter);
 app.use('*', NotFoundController);

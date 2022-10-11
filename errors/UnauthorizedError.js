@@ -1,4 +1,4 @@
-const { UNAUTHORIZED } = require('./ErrorMessages');
+const { UNAUTHORIZED } = require('./errorMessages');
 
 class UnauthorizedError extends Error {
   constructor(message) {
