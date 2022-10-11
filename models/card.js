@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { regexGm } = require('../utils/constants');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -12,7 +13,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(value) {
-        return /^(https?:\/\/)?([\w]{1,32}\.[\w]{1,32})[^]*$/gm.test(value);
+        return regexGm.test(value);
       },
     },
   },

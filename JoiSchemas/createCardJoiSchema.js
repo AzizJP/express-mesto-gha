@@ -1,4 +1,5 @@
 const { Joi } = require('celebrate');
+const { regex } = require('../utils/constants');
 
 const createCardJoiSchema = Joi.object().keys({
   name: Joi.string()
@@ -7,7 +8,7 @@ const createCardJoiSchema = Joi.object().keys({
     .min(2),
   link: Joi.string()
     .required()
-    .pattern(/^(https?:\/\/)?([\w]{1,32}\.[\w]{1,32})[^]*$/),
+    .pattern(regex),
 });
 
 module.exports = createCardJoiSchema;
