@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', routes);
 
+app.use(helmet());
 app.use(errors());
 app.use(errorHandler);
 

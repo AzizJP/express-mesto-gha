@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { default: isEmail } = require('validator/lib/isEmail');
 const { UNAUTHORIZED_MESSAGE } = require('../errors/errorMessages');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const { regexForUrlGlobal } = require('../utils/constants');
+const { regexForUrl } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(value) {
-        return regexForUrlGlobal.test(value);
+        return regexForUrl.test(value);
       },
     },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
