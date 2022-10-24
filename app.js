@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const helmet = require('helmet');
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -12,7 +13,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(requestLogger);
+
 app.use('/', routes);
+
+app.use(errorLogger);
 
 app.use(helmet());
 app.use(errors());
